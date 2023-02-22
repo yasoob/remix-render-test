@@ -1,0 +1,18 @@
+databases:
+  - name: remixdb
+    databaseName: remixdb
+    user: remix
+    plan: free
+
+services:
+  - type: web
+    name: remix
+    env: node
+    plan: free
+    buildCommand: "npm ci && npm run build && npx prisma migrate deploy"
+    startCommand: "npm run start"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: remixdb
+          property: connectionString
